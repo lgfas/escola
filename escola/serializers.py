@@ -10,11 +10,11 @@ class EstudanteSerializer(serializers.ModelSerializer):
 
     def validate(self, dados):
         if cpf_invalido(dados['cpf']):
-            raise serializers.ValidationError({'cpf':'CPF deve ter 11 digitos'})
+            raise serializers.ValidationError({'cpf':'CPF deve ter um valor válido'})
         if nome_invalido(dados['nome']):
             raise serializers.ValidationError({'nome':'Nome deve ter apenas letras'})
         if celular_invalido(dados['celular']):
-            raise serializers.ValidationError({'celular': 'Celular deve ter 13 digitos'})
+            raise serializers.ValidationError({'celular': 'Celular deve estar no formato DD 9XXXX-XXXX'})
 
         return dados
 
@@ -43,3 +43,8 @@ class ListaMatriculasCursoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Matricula
         fields = ['estudante_nome']
+
+class EstudanteSerializerV2(serializers.ModelSerializer):
+    class Meta:
+        model = Estudante
+        fields = ['id', 'nome', 'email', 'celular']
